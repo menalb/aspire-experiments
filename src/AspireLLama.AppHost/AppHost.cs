@@ -1,6 +1,6 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var cache = builder.AddRedis("cache");
+// var cache = builder.AddRedis("cache");
 
 var ollama = builder.AddOllama("ollama")
                     //.AddModel("llama3")
