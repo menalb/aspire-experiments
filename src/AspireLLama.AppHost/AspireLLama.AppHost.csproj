@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AspireLLama.ApiService\AspireLLama.ApiService.csproj" />
-    <ProjectReference Include="..\AspireLLama.Web\AspireLLama.Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>
