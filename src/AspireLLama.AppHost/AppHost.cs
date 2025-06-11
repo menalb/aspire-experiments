@@ -9,7 +9,6 @@ var ollama = builder.AddOllama("ollama")
                     .WithOpenWebUI()
                     .AddModel("chat", "phi3.5");
 
-
 var apiService = builder.AddProject<Projects.AspireLLama_ApiService>("api")
     .WithHttpHealthCheck("/health")
     .WithEnvironment("GOOGLE_API_KEY",builder.Configuration["GoogleApiKey"])

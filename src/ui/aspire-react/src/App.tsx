@@ -36,7 +36,7 @@ function App() {
       });
   };
 
-  const ask = () => {
+  const ask = async () => {
 
     const message = `Given these data (time of the day and temperature in celsius): ${JSON.stringify(temperatures)}.
      Please, provide a simple and direct answer, just give the day, without any other detail.
@@ -44,24 +44,29 @@ function App() {
      `;
     setIsAsking(true);
     setAnswer("");
-    fetch('/api/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ question: message }),
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log("Response from ask:", data);
-        setAnswer(data);
-        setIsAsking(false);
-      })
-      .catch(err => {
-        console.error("Error asking question:", err);
-        alert("Failed to get response from server.");
-        setIsAsking(false);
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ question: message }),
       });
+
+      if (response.status === 200) {
+        const data = await response.json();
+        setAnswer(data);
+      }
+      else {
+        alert("Failed to get response from server.");
+      }
+    }
+    catch (e) {
+      console.error(e);
+    }
+    setIsAsking(false);
+
   };
 
   return (
