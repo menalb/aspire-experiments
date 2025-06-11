@@ -15,8 +15,6 @@ builder.Services.AddOpenApi();
 
 builder.AddOllamaApiClient("chat").AddChatClient();
 
-var MyAllowSpecificOrigins = "MyAllowSpecificOrigins";
-
 builder.Services.AddHttpClient();
 
 var googleApiKey = builder.Configuration.GetValue<string>("GOOGLE_API_KEY")
@@ -24,17 +22,6 @@ var googleApiKey = builder.Configuration.GetValue<string>("GOOGLE_API_KEY")
 
 builder.Services.AddScoped<WeatherService>(x => new(x.GetRequiredService<IHttpClientFactory>(), googleApiKey));
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-        policy =>
-        {
-            policy
-                .WithOrigins("http://localhost:*")
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
-});
 
 var app = builder.Build();
 
@@ -60,9 +47,6 @@ app.MapGet("/weatherforecast",
             service.GetTemperature(cityName)
     )
     .WithName("GetWeatherForecast");
-
-
-app.UseCors(MyAllowSpecificOrigins);
 
 app.MapDefaultEndpoints();
 
